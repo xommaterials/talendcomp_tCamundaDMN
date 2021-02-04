@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="calculate" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <inputData id="InputData_1ws3izl" name="type" />
+  <inputData id="InputData_0nzva7y" name="width" />
+  <decision id="surcharge" name="calculate">
+    <informationRequirement id="InformationRequirement_1qk8zuq">
+      <requiredInput href="#InputData_1ws3izl" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1krd814">
+      <requiredInput href="#InputData_0nzva7y" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1ka4wz4">
+      <requiredInput href="#InputData_1o50tz4" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1qwpp1g">
+      <requiredInput href="#InputData_0p27x6q" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0yuareh" hitPolicy="COLLECT">
+      <input id="InputClause_0wpulll" label="product" camunda:inputVariable="product">
+        <inputExpression id="LiteralExpression_11uruf6" typeRef="string" />
+      </input>
+      <input id="InputClause_0zpfyb2" label="type" camunda:inputVariable="type">
+        <inputExpression id="LiteralExpression_107rpxo" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1qsawwa" label="grade" camunda:inputVariable="grade">
+        <inputExpression id="LiteralExpression_0hy9s0o" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0tecceb" label="width" camunda:inputVariable="width">
+        <inputExpression id="LiteralExpression_0e9bg3w" typeRef="integer" expressionLanguage="feel">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_039tezp" label="surcharge" name="surcharge" typeRef="integer" />
+      <rule id="DecisionRule_0zlaw8r">
+        <inputEntry id="UnaryTests_090d4wv">
+          <text>"Product1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1d479qx">
+          <text>"1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1llncm7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_104ygwy">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1cbtgw8">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1rfpy3e">
+        <inputEntry id="UnaryTests_0ogc20y">
+          <text>"Product2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kcsb7q">
+          <text>"1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05fnq32">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vzkk0p">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14i5ngo">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vidtrc">
+        <inputEntry id="UnaryTests_05qmfe4">
+          <text>"Product3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03576ii">
+          <text>"1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0okq9zq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15whb6k">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qz5y80">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0svmftu">
+        <inputEntry id="UnaryTests_0uc2l7l">
+          <text>"Product1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ygop5l">
+          <text>"2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kd7rem">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0x3nocs">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0koi8ue">
+          <text>550</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00mhgwj">
+        <inputEntry id="UnaryTests_0b1yfai">
+          <text>"Product2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03161wd">
+          <text>"2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_053h92d">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19ilcjq">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wgzsfd">
+          <text>550</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_03yjw5h">
+        <inputEntry id="UnaryTests_12macc8">
+          <text>"Product3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fv21w0">
+          <text>"2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0inw2cr">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07b0t6r">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0z96yn7">
+          <text>550</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0omj71l">
+        <inputEntry id="UnaryTests_0h5k0sh">
+          <text>"Product1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06o1bjw">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16g89vo">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_143jt45">
+          <text>1000,1250</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1vk73v4">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04g8tvi">
+        <inputEntry id="UnaryTests_0ialvuk">
+          <text>"Product2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mvqwf9">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12noata">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14rhl31">
+          <text>1000,1250</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0za5lej">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1dl69xm">
+        <inputEntry id="UnaryTests_1uw41vw">
+          <text>"Product3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fixrfg">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1sglgwa">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10py3xo">
+          <text>1000,1250</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1cqapjz">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1qvjciw">
+        <inputEntry id="UnaryTests_1upvu0w">
+          <text>"Product1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_114cqej">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0smm71s">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03tzvlz">
+          <text>1500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jk3z7v">
+          <text>150</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1qjtays">
+        <inputEntry id="UnaryTests_1d9dg64">
+          <text>"Product2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0881hiu">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0r2gzxc">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gbo7e4">
+          <text>1500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02b0qee">
+          <text>150</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_10q5a90">
+        <inputEntry id="UnaryTests_15si4tc">
+          <text>"Product3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0046y2l">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1phy7s5">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1pfg15x">
+          <text>1500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13th2cw">
+          <text>150</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13ojc87">
+        <inputEntry id="UnaryTests_1jwuhme">
+          <text>"Product1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1p2n5fn">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04hmmcy">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1s01jfo">
+          <text>not(1000,1250,1500)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1hraw40">
+          <text>200</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06db3mn">
+        <inputEntry id="UnaryTests_0tap8k6">
+          <text>"Product2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15mcj5o">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xa7fa3">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00tdmm7">
+          <text>not(1000,1250,1500)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_159yekk">
+          <text>200</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tmdz6q">
+        <inputEntry id="UnaryTests_1m7fcp8">
+          <text>"Product3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ejwnmf">
+          <text>"3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0r5qw3y">
+          <text>not("4016")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ll3mxd">
+          <text>not(1000,1250,1500)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1uvv33t">
+          <text>200</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0biahaw">
+        <inputEntry id="UnaryTests_00mh9dk">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0647krj">
+          <text>"1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tyqlnu">
+          <text>"4301","4307"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_102xdeh">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07a1wqu">
+          <text>250</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vllf9q">
+        <inputEntry id="UnaryTests_1nam03m">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rlvplm">
+          <text>"1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06imelc">
+          <text>"4404"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hx69ep">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08ua5xr">
+          <text>250</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vubdvc">
+        <inputEntry id="UnaryTests_0gjttzt">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vvmghz">
+          <text>"1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0z8zdq2">
+          <text>"4541","4571"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0n627lf">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1r6f7e2">
+          <text>250</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1m8lqnn">
+        <inputEntry id="UnaryTests_0fn7632">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06v4l7c">
+          <text>"4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17nm5zl">
+          <text>"4301","4307"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0y1tbqa">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_017ub96">
+          <text>180</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jeqfaf">
+        <inputEntry id="UnaryTests_09p1r4z">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0s0xfoj">
+          <text>"4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0k9lipp">
+          <text>"4404"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rv9rrs">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0uu0vp3">
+          <text>180</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0i10a1b">
+        <inputEntry id="UnaryTests_0m2efrt">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1l8h5b8">
+          <text>"4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_182q934">
+          <text>"4541","4571"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_066sygz">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jvv8y2">
+          <text>180</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1nnx1x8">
+        <inputEntry id="UnaryTests_0hnow7u">
+          <text>"Product4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11c87p7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13ur4lj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_141o0mz">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0y123ru">
+          <text>145</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1anocqx">
+        <inputEntry id="UnaryTests_16v7ow7">
+          <text>"Product5"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08owvs5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ddtllh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nic1uf">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19ky0xo">
+          <text>145</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nca4j8">
+        <inputEntry id="UnaryTests_1icj8uy">
+          <text>"Product6"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lbro00">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vcaoda">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cqrzyb">
+          <text>2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13dhcko">
+          <text>145</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1rktyvo">
+        <inputEntry id="UnaryTests_0v1m7ks">
+          <text>"Product4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cn649e">
+          <text>"4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1d8982r">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1252kmj">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0lat2kz">
+          <text>-120</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0r14mrf">
+        <inputEntry id="UnaryTests_0l6yc6o">
+          <text>"Product5"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0725mx8">
+          <text>"4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0epvo4y">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kxyfo3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ppog95">
+          <text>-120</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0qbyqq0">
+        <inputEntry id="UnaryTests_1lqwrlm">
+          <text>"Product6"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mdexvm">
+          <text>"4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ovq894">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1w136el">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nrrd8e">
+          <text>-120</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1o50tz4" name="grade" />
+  <inputData id="InputData_0p27x6q" name="product" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0wint9p" dmnElementRef="InputData_1ws3izl">
+        <dc:Bounds height="45" width="125" x="327" y="317" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0lyiiez" dmnElementRef="InputData_0nzva7y">
+        <dc:Bounds height="45" width="125" x="647" y="317" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06jmu97" dmnElementRef="InformationRequirement_1qk8zuq">
+        <di:waypoint x="390" y="317" />
+        <di:waypoint x="462" y="180" />
+        <di:waypoint x="462" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_04oycbp" dmnElementRef="InformationRequirement_1krd814">
+        <di:waypoint x="710" y="317" />
+        <di:waypoint x="534" y="180" />
+        <di:waypoint x="534" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_143ocam" dmnElementRef="surcharge">
+        <dc:Bounds height="80" width="180" x="390" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0t14sjx" dmnElementRef="InputData_1o50tz4">
+        <dc:Bounds height="45" width="125" x="487" y="317" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0dvv89n" dmnElementRef="InformationRequirement_1ka4wz4">
+        <di:waypoint x="550" y="317" />
+        <di:waypoint x="498" y="180" />
+        <di:waypoint x="498" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0mwn6lr" dmnElementRef="InputData_0p27x6q">
+        <dc:Bounds height="45" width="125" x="177" y="317" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_11hasnt" dmnElementRef="InformationRequirement_1qwpp1g">
+        <di:waypoint x="240" y="317" />
+        <di:waypoint x="426" y="180" />
+        <di:waypoint x="426" y="160" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
