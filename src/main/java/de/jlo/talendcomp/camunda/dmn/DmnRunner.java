@@ -28,6 +28,8 @@ import java.util.Map;
 
 import org.camunda.bpm.dmn.engine.DmnDecision;
 import org.camunda.bpm.dmn.engine.DmnDecisionLogic;
+import org.camunda.bpm.dmn.engine.DmnDecisionResult;
+import org.camunda.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.camunda.bpm.dmn.engine.DmnEngine;
 import org.camunda.bpm.dmn.engine.DmnEngineConfiguration;
 import org.camunda.bpm.dmn.engine.impl.DmnDecisionTableImpl;
@@ -46,12 +48,16 @@ public class DmnRunner {
 	private DmnEngine dmnEngine = null;
 	private DmnDecision decision = null;
 	private VariableMap variables = null;
+	private DmnDecisionResult resultset = null;
+	private DmnDecisionResultEntries oneResult = null;
 	private boolean useCachedDecision = false;
 	private static Map<String, DmnDecision> decisionMap = new HashMap<>();
 	private List<DmnDecisionTableInputImpl> listDecisionTableInputs = null;
 	private List<DmnDecisionTableOutputImpl> listDecisionTableOutputs = null;
 	private List<String> listTalendIncomingColumns = new ArrayList<>();
 	private List<String> listTalendOutgoingColumns = new ArrayList<>();
+	private boolean provideOneRecordIfNoDecsionResult = false;
+	private int currentResultIndex = -1;
 	
 	public DmnRunner() {
 		dmnEngine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration().buildEngine();
@@ -153,10 +159,6 @@ public class DmnRunner {
 		}
 	}
 	
-	public DmnDecision getDecision() {
-		return decision;
-	}
-	
 	/**
 	 * clears the former values. Must be performed before loading a new schema record
 	 */
@@ -165,6 +167,7 @@ public class DmnRunner {
 			variables.clear();
 			variables = null;		
 		}
+		resultset = null;
 	}
 
 	/**
@@ -203,7 +206,10 @@ public class DmnRunner {
 					key = input.getInputVariable();
 				}
 				if (listTalendIncomingColumns.contains(key) == false) {
-					sb.append("Decisions input: " + key + " has no corresponding Talend incoming schema column\n");
+					if (sb.length() > 0) {
+						sb.append("\n");
+					}
+					sb.append("Decisions input: " + key + " has no corresponding Talend incoming schema column");
 				}
 			}
 			if (sb.length() > 0) {
@@ -242,12 +248,66 @@ public class DmnRunner {
 					}
 				}
 				if (exists == false) {
-					sb.append("Talend outgoing schema column: " + name + " has no output variable within the decsion\n");
+					if (sb.length() > 0) {
+						sb.append("\n");
+					}
+					sb.append("Talend outgoing schema column: " + name + " has no output variable within the decsion");
 				}
 			}
 			if (sb.length() > 0) {
 				throw new Exception(sb.toString());
 			}
+		}
+	}
+	
+	/**
+	 * Evaluates the decision with the former set variables
+	 * @throws Exception
+	 */
+	public void evaluate() throws Exception {
+		try {
+			resultset = dmnEngine.evaluateDecision(decision, variables);
+		} catch (Exception e) {
+			throw new Exception("Evaluating decision: " + decision.getName() + " and variables: " + variables + " failed: " + e.getMessage(), e);
+		}
+	}
+	
+	/**
+	 * Iterate through the result-set
+	 * @return true if there is a new result record
+	 * @throws Exception
+	 */
+	public boolean next() throws Exception {
+		if (resultset == null) {
+			return false;
+		} else if (resultset.size() == 0) {
+			if (provideOneRecordIfNoDecsionResult) {
+				return true;
+			}
+		}
+		if (currentResultIndex < resultset.size()) {
+			oneResult = resultset.get(currentResultIndex++);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns a output value for the current result record
+	 * @param outgoingSchemaColumn
+	 * @return the value
+	 */
+	public Object getOutputValue(String outgoingSchemaColumn) {
+		if (oneResult == null) {
+			if (provideOneRecordIfNoDecsionResult) {
+				return null;
+			} else {
+				throw new IllegalStateException("We expect to have one result record but there is no one. Did you have called next and set option provideOneRecordIfNoDecsionResult correctly?");
+			}
+		} else {
+			Object value = oneResult.get(outgoingSchemaColumn);
+			return value;
 		}
 	}
 	
@@ -268,5 +328,18 @@ public class DmnRunner {
 		}
 		return false;
 	}
+
+	public boolean isProvideOneRecordIfNoDecsionResult() {
+		return provideOneRecordIfNoDecsionResult;
+	}
+
+	/**
+	 * set true to take care we get per incoming record an outgoing record in the component
+	 * @param provideOneRecordIfNoDecsionResult
+	 */
+	public void setProvideOneRecordIfNoDecsionResult(boolean provideOneRecordIfNoDecsionResult) {
+		this.provideOneRecordIfNoDecsionResult = provideOneRecordIfNoDecsionResult;
+	}
+
 
 }
