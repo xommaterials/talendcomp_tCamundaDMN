@@ -57,7 +57,7 @@ public class DmnRunner {
 	private List<String> listTalendIncomingColumns = new ArrayList<>();
 	private List<String> listTalendOutgoingColumns = new ArrayList<>();
 	private boolean provideOneRecordIfNoDecsionResult = false;
-	private int currentResultIndex = -1;
+	private int currentResultIndex = 0;
 	
 	public DmnRunner() {
 		dmnEngine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration().buildEngine();
@@ -219,6 +219,17 @@ public class DmnRunner {
 	}
 	
 	/**
+	 * add a Talend schema input variable for the validation for later validation
+	 * @param schemaOutputColumn
+	 */
+	public void addExpectedInputVariable(String schemaInputColumn) {
+		if (isEmpty(schemaInputColumn)) {
+			throw new IllegalArgumentException("schemaInputColumn cannot be null or empty");
+		}
+		listTalendIncomingColumns.add(schemaInputColumn);
+	}
+	
+	/**
 	 * add a Talend schema output variable for the validation for later validation
 	 * @param schemaOutputColumn
 	 */
@@ -228,7 +239,7 @@ public class DmnRunner {
 		}
 		listTalendOutgoingColumns.add(schemaOutputColumn);
 	}
-	
+
 	/**
 	 * checks if the Talend output variables have a corresponding output variable in the decision
 	 * @throws Exception if it is not the case
@@ -269,6 +280,18 @@ public class DmnRunner {
 			resultset = dmnEngine.evaluateDecision(decision, variables);
 		} catch (Exception e) {
 			throw new Exception("Evaluating decision: " + decision.getName() + " and variables: " + variables + " failed: " + e.getMessage(), e);
+		}
+	}
+	
+	/**
+	 * Number result rows
+	 * return count result rows
+	 */
+	public int countResultRows() {
+		if (resultset != null) {
+			return resultset.size();
+		} else {
+			return 0;
 		}
 	}
 	
