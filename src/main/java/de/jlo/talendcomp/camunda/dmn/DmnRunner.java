@@ -136,7 +136,7 @@ public class DmnRunner {
 				}
 				inspectDecisionIO();
 			} catch (Exception e) {
-				throw new Exception("Load decision with key: " + decisionKey + " from path: " + path + " failed: " + e.getMessage(), e);
+				throw new Exception("Load decision with key: " + decisionKey + " from file: " + path + " failed: " + e.getMessage(), e);
 			} finally {
 				if (in != null) {
 					try {

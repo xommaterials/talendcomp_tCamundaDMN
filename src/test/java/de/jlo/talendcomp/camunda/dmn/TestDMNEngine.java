@@ -221,7 +221,7 @@ public class TestDMNEngine {
 			System.out.println("==========================");
 			System.out.println("executed elements=" + collector.getExecutedDecisionElements());
 			System.out.println("executed instances=" + collector.getExecutedDecisionInstances());
-			assertEquals(2, result.size());
+			assertEquals(1, result.size());
 		} finally {
 			try {
 				inputStream.close();
