@@ -18,10 +18,12 @@ package de.jlo.talendcomp.camunda.dmn;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +59,9 @@ public class DmnRunner {
 	private List<String> listTalendIncomingColumns = new ArrayList<>();
 	private List<String> listTalendOutgoingColumns = new ArrayList<>();
 	private boolean provideOneRecordIfNoDecsionResult = false;
+	private boolean provideOneRecordIfNoDecsionResultDelivered = false;
 	private int currentResultIndex = 0;
+	private TypeUtil typeUtil = new TypeUtil();
 	
 	public DmnRunner() {
 		dmnEngine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration().buildEngine();
@@ -304,7 +308,8 @@ public class DmnRunner {
 		if (resultset == null) {
 			return false;
 		} else if (resultset.size() == 0) {
-			if (provideOneRecordIfNoDecsionResult) {
+			if (provideOneRecordIfNoDecsionResult && provideOneRecordIfNoDecsionResultDelivered == false) {
+				provideOneRecordIfNoDecsionResultDelivered = true;
 				return true;
 			}
 		}
@@ -321,7 +326,7 @@ public class DmnRunner {
 	 * @param outgoingSchemaColumn
 	 * @return the value
 	 */
-	public Object getOutputValue(String outgoingSchemaColumn) {
+	public Object getOutputValue(String outgoingSchemaColumn, boolean nullable) throws Exception {
 		if (oneResult == null) {
 			if (provideOneRecordIfNoDecsionResult) {
 				return null;
@@ -330,10 +335,58 @@ public class DmnRunner {
 			}
 		} else {
 			Object value = oneResult.get(outgoingSchemaColumn);
+			if (value == null && nullable == false) {
+				throw new Exception("For column: " + outgoingSchemaColumn + " null value detected but column is configured as not nullable");
+			}
 			return value;
 		}
 	}
 	
+	public String getOutputValueAsString(String outgoingSchemaColumn, boolean nullable) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToString(value, null);
+	}
+	
+	public Integer getOutputValueAsInteger(String outgoingSchemaColumn, boolean nullable) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToInteger(value, null);
+	}
+	
+	public Long getOutputValueAsLong(String outgoingSchemaColumn, boolean nullable) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToLong(value, null);
+	}
+	
+	public Double getOutputValueAsDouble(String outgoingSchemaColumn, boolean nullable) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToDouble(value, null);
+	}
+	
+	public Float getOutputValueAsFloat(String outgoingSchemaColumn, boolean nullable) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToFloat(value, null);
+	}
+	
+	public BigDecimal getOutputValueAsBigDecimal(String outgoingSchemaColumn, boolean nullable) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToBigDecimal(value, null);
+	}
+	
+	public Boolean getOutputValueAsBoolean(String outgoingSchemaColumn, boolean nullable) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToBoolean(value, null);
+	}
+	
+	public Date getOutputValueAsDate(String outgoingSchemaColumn, boolean nullable, String pattern) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToDate(value, pattern, null);
+	}
+
+	public Short getOutputValueAsShort(String outgoingSchemaColumn, boolean nullable) throws Exception {
+		Object value = getOutputValue(outgoingSchemaColumn, nullable);
+		return typeUtil.convertToShort(value, null);
+	}
+
 	/**
 	 * returns true if the string is null or empty or equals "null"
 	 * @param s the string

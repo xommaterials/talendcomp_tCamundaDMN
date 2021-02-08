@@ -24,7 +24,7 @@ public class TestDmnRunner {
 		runner.addInputValue("guestCount", guestCount);
 		runner.evaluate();
 		if (runner.next()) {
-			String dish = (String) runner.getOutputValue("desiredDish");
+			String dish = (String) runner.getOutputValue("desiredDish", true);
 			System.out.println(dish);
 			assertEquals("Roastbeef", dish);
 		}
@@ -57,7 +57,7 @@ public class TestDmnRunner {
 		int count = 0;
 		while (runner.next()) {
 			count++;
-			Integer surcharge = (Integer) runner.getOutputValue("surcharge");
+			Integer surcharge = (Integer) runner.getOutputValue("surcharge", true);
 			System.out.println(surcharge);
 			if (count == 1) {
 				assertEquals((long) 10, (long) surcharge);
@@ -66,6 +66,40 @@ public class TestDmnRunner {
 			}
 		}
 		assertEquals(2, count);
+	}
+
+	@Test
+	public void testNoRecords() throws Exception {
+		String product = "Product0";
+		String type = "1";
+		String grade = "4307";
+		int width = 0;
+		// this runs within the BEGIN part
+		DmnRunner runner = new DmnRunner();
+		runner.loadDmnFromResource("surcharge", "/collect_sum_example.dmn");
+		runner.addExpectedInputVariable("product");
+		runner.addExpectedInputVariable("type");
+		runner.addExpectedInputVariable("grade");
+		runner.addExpectedInputVariable("width");
+		runner.validateInputVariables();
+		runner.addExpectedOutputVariable("surcharge");
+		runner.validateOutputVariables();
+		// this runs within the MAIN part
+		runner.clearVariables();
+		runner.addInputValue("product", product);
+		runner.addInputValue("type", type);
+		runner.addInputValue("grade", grade);
+		runner.addInputValue("width", width);
+		runner.evaluate();
+		runner.setProvideOneRecordIfNoDecsionResult(true);
+		System.out.println(runner.countResultRows());
+		int count = 0;
+		while (runner.next()) {
+			count++;
+			Integer surcharge = (Integer) runner.getOutputValue("surcharge", true);
+			System.out.println(surcharge);
+		}
+		assertEquals(1, count);
 	}
 
 }

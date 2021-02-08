@@ -18,10 +18,10 @@
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode) codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
-	IConnection conn = null;
+	IConnection outconn = null;
 	List<? extends IConnection> outConns = NodeUtil.getOutgoingConnections(node, IConnectionCategory.DATA);
 	if (outConns.size() > 0) {
-		conn = outConns.get(0);
+		outconn = outConns.get(0);
 	}
 	List<IMetadataColumn> listColumns = new ArrayList<IMetadataColumn>(); // dummy
 	List<IMetadataTable> metadatas = node.getMetadataList();
@@ -47,33 +47,68 @@
 	@SuppressWarnings("unchecked")
 	List<Map<String, String>> configList = (List<Map<String,String>>) ElementParameterParser.getObjectValue(node, "__COLUMN_CONFIG__");
 %>
-	int nb_line_<%=cid%> = 0;
-	de.jlo.talendcomp.camunda.dmn.DmnRunner <%=cid%> = new de.jlo.talendcomp.camunda.dmn.DmnRunner();
-	String decisionKey_<%=cid%> = <%=decisionKey%>;
-<% if ("RESOURCE".equals(dmnSource)) { %>
-	<%=cid%>.loadDmnFromResource(decisionKey_<%=cid%>, <%=resourceName%>);		
-<% } else if ("FILE".equals(dmnSource)) { %>
-	<%=cid%>.loadDmnFromFile(decisionKey_<%=cid%>, <%=filePath%>);
-<% } %>
-	// check io variables		
+	// clear variables and results from the previous row
+	<%=cid%>.clearVariables();
+	// fill input values and transfer input to output
 <%	for (int i = 0; i < listColumns.size(); i++) {
 		IMetadataColumn mc = listColumns.get(i);
 		Map<String, String> config = configList.get(i);
 		String name = mc.getLabel();
 		boolean useAsInput = "true".equals(config.get("USE_AS_INPUT"));
 		boolean useAsOutput = "true".equals(config.get("USE_AS_OUTPUT"));
-		if (useAsInput) { %>
-	<%=cid%>.addExpectedInputVariable("<%=name%>");
-<%    } else if (useAsOutput) { %>
-	<%=cid%>.addExpectedOutputVariable("<%=name%>");
-<%		} %>
-<%	} %>
+		if (useAsInput && inconn != null) { %>
+	<%=cid%>.addInputValue("<%=name%>", <%=inconn.getName()%>.<%=name%>);
+<%		}
+		if (inconn != null && outconn != null) {
+			for (IMetadataColumn incol : listIncomingColumns) { %>
+<%				if (incol.getLabel().equals(mc.getLabel())) {
+					if (outconn != null && useAsOutput == false) { %>
+	<%=outconn.getName()%>.<%=mc.getLabel()%> = <%=inconn.getName()%>.<%=incol.getLabel()%>;
+<%					}
+					break;
+				}
+			}
+		}
+	} %>
+	// evaluate the decision
 	try {
-		<%=cid%>.validateInputVariables();
-		<%=cid%>.validateOutputVariables();
+		<%=cid%>.evaluate();
 	} catch (Exception e) {
 		String message = e.getMessage();
 		globalMap.put("<%=cid%>_ERROR_MESSAGE", message);
 		throw e;
 	}
-	<%=cid%>.setProvideOneRecordIfNoDecsionResult(<%=oneRecordIfNoResult%>);
+	globalMap.put("<%=cid%>_COUNT_CURRENT_DECISION_RESULT_RECORDS", <%=cid%>.countResultRows());
+<%	if (outconn != null) { %>
+	while (<%=cid%>.next()) {
+		nb_line_<%=cid%>++;
+<%		for (int i = 0; i < listColumns.size(); i++) {
+			IMetadataColumn mc = listColumns.get(i);
+			Map<String, String> config = configList.get(i);
+			String name = mc.getLabel();
+			boolean useAsOutput = "true".equals(config.get("USE_AS_OUTPUT"));
+			if (useAsOutput) {
+				String javaClassName = mc.getTalendType().substring(3);
+				boolean isDateValue = javaClassName.contains("Date");
+				boolean isNullable = mc.isNullable(); %>
+		try {
+<%				if (isDateValue) { 
+					String pattern = mc.getPattern(); 
+					if (pattern == null || pattern.trim().isEmpty()) {
+						pattern = "null";
+					} %>
+			<%=outconn.getName()%>.<%=mc.getLabel()%> = <%=cid%>.getOutputValueAsDate("<%=name%>",<%=isNullable%>,<%=pattern%>);
+<%				} else { %>
+			<%=outconn.getName()%>.<%=mc.getLabel()%> = <%=cid%>.getOutputValueAs<%=javaClassName%>("<%=name%>",<%=isNullable%>);
+<%				} %>
+		} catch (Exception ve) {
+			String message = "Get output value for column: <%=name%> failed: " + ve.getMessage();
+			globalMap.put("<%=cid%>_ERROR_MESSAGE", message);
+			throw new Exception(message, ve);
+		}
+<%			}
+		}
+	} %>
+		
+		
+	
