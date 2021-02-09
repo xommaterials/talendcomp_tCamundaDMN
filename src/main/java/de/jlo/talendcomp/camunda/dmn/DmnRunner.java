@@ -172,6 +172,7 @@ public class DmnRunner {
 			variables = null;		
 		}
 		resultset = null;
+		currentResultIndex = 0;
 	}
 
 	/**
