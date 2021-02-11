@@ -2,6 +2,8 @@ package de.jlo.talendcomp.camunda.dmn;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
+
 import org.junit.Test;
 
 public class TestDmnRunner {
@@ -100,6 +102,26 @@ public class TestDmnRunner {
 			System.out.println(surcharge);
 		}
 		assertEquals(1, count);
+	}
+	
+	@Test
+	public void testGenerateCacheKey() throws Exception {
+		String varStr = "äöü1234567890";
+		Long varLong = 9999999l;
+		Date varDate = new Date();
+		DmnRunner runner = new DmnRunner();
+		runner.addInputValue("varStr", varStr);
+		runner.addInputValue("varLong", varLong);
+		runner.addInputValue("varDate", varDate);
+		String key1 = runner.getValueKeyForCurrentVariables();
+		System.out.println(key1);
+		DmnRunner runner2 = new DmnRunner();
+		runner2.addInputValue("varStr", varStr);
+		runner2.addInputValue("varLong", varLong);
+		runner2.addInputValue("varDate", varDate);
+		String key2 = runner2.getValueKeyForCurrentVariables();
+		System.out.println(key2);
+		assertEquals("Key generation is not equal", key1, key2);
 	}
 
 }

@@ -62,6 +62,8 @@ public class DmnRunner {
 	private boolean provideOneRecordIfNoDecsionResultDelivered = false;
 	private int currentResultIndex = 0;
 	private TypeUtil typeUtil = new TypeUtil();
+	private boolean cacheResults = false;
+	private Map<String,DmnDecisionResult> resultCache = new HashMap<>();
 	
 	public DmnRunner() {
 		dmnEngine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration().buildEngine();
@@ -80,8 +82,9 @@ public class DmnRunner {
 		if (isEmpty(resourceName)) {
 			throw new IllegalArgumentException("resourceName cannot be null or empty");
 		}
+		String decisionCacheKey = "resource:" + resourceName+"#"+decisionKey;
 		if (useCachedDecision) {
-			decision = decisionMap.get(resourceName+"/"+decisionKey);
+			decision = decisionMap.get(decisionCacheKey);
 		}
 		if (decision == null) {
 			InputStream in = null;
@@ -90,20 +93,10 @@ public class DmnRunner {
 				if (in == null) {
 					throw new Exception("Resource: " + resourceName + " not available");
 				}
-				decision = dmnEngine.parseDecision(decisionKey, in);
-				if (useCachedDecision) {
-					decisionMap.put(resourceName+":"+decisionKey, decision);
-				}
-				inspectDecisionIO();
 			} catch (Exception e) {
-				throw new Exception("Load decision with key: " + decisionKey + " from resource: " + resourceName + " failed: " + e.getMessage(), e);
-			} finally {
-				if (in != null) {
-					try {
-						in.close();
-					} catch (IOException ioe) {}
-				}
+				throw new Exception("Load decision from resource: " + resourceName + " failed: " + e.getMessage(), e);
 			}
+			loadDecision(in, decisionKey, decisionCacheKey);
 		}
 	}
 
@@ -120,8 +113,9 @@ public class DmnRunner {
 		if (isEmpty(path)) {
 			throw new IllegalArgumentException("path cannot be null or empty");
 		}
+		String decisionCacheKey = "file:" + path+"#"+decisionKey;
 		if (useCachedDecision) {
-			decision = decisionMap.get(path+"/"+decisionKey);
+			decision = decisionMap.get(decisionCacheKey);
 		}
 		if (decision == null) {
 			InputStream in = null;
@@ -134,19 +128,27 @@ public class DmnRunner {
 				if (in == null) {
 					throw new Exception("File with path: " + path + " cannot be read");
 				}
-				decision = dmnEngine.parseDecision(decisionKey, in);
-				if (useCachedDecision) {
-					decisionMap.put(path+":"+decisionKey, decision);
-				}
-				inspectDecisionIO();
 			} catch (Exception e) {
-				throw new Exception("Load decision with key: " + decisionKey + " from file: " + path + " failed: " + e.getMessage(), e);
-			} finally {
-				if (in != null) {
-					try {
-						in.close();
-					} catch (IOException ioe) {}
-				}
+				throw new Exception("Load decision file: " + path + " failed: " + e.getMessage(), e);
+			}
+			loadDecision(in, decisionKey, decisionCacheKey);
+		}
+	}
+	
+	private void loadDecision(InputStream in, String decisionKey, String decisionCacheKey) throws Exception {
+		try {
+			decision = dmnEngine.parseDecision(decisionKey, in);
+			if (useCachedDecision) {
+				decisionMap.put(decisionCacheKey, decision);
+			}
+			inspectDecisionIO();
+		} catch (Exception e) {
+			throw new Exception("Load decision with key: " + decisionKey + " from: " + decisionCacheKey + " failed: " + e.getMessage(), e);
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException ioe) {}
 			}
 		}
 	}
@@ -173,6 +175,7 @@ public class DmnRunner {
 		}
 		resultset = null;
 		currentResultIndex = 0;
+		provideOneRecordIfNoDecsionResultDelivered = false;
 	}
 
 	/**
@@ -276,15 +279,40 @@ public class DmnRunner {
 		}
 	}
 	
+	public String getValueKeyForCurrentVariables() {
+		StringBuilder sb = new StringBuilder(100);
+		for (Map.Entry<String, Object> entry : variables.entrySet()) {
+			sb.append(entry.getKey());
+			Object value = entry.getValue();
+			if (value instanceof Date) {
+				sb.append(((Date) value).getTime());
+			} else {
+				sb.append(value);
+			}
+		}
+		return sb.toString();
+	}
+	
 	/**
 	 * Evaluates the decision with the former set variables
+	 * Use cached results if option cacheResults is set 
 	 * @throws Exception
 	 */
 	public void evaluate() throws Exception {
-		try {
-			resultset = dmnEngine.evaluateDecision(decision, variables);
-		} catch (Exception e) {
-			throw new Exception("Evaluating decision: " + decision.getName() + " and variables: " + variables + " failed: " + e.getMessage(), e);
+		String inputKey = null;
+		if (cacheResults) {
+			inputKey = getValueKeyForCurrentVariables();
+			resultset = resultCache.get(inputKey);
+		}
+		if (resultset == null) {
+			try {
+				resultset = dmnEngine.evaluateDecision(decision, variables);
+				if (cacheResults) {
+					resultCache.put(inputKey, resultset);
+				}
+			} catch (Exception e) {
+				throw new Exception("Evaluating decision: " + decision.getName() + " and variables: " + variables + " failed: " + e.getMessage(), e);
+			}
 		}
 	}
 	
@@ -416,6 +444,14 @@ public class DmnRunner {
 	 */
 	public void setProvideOneRecordIfNoDecsionResult(boolean provideOneRecordIfNoDecsionResult) {
 		this.provideOneRecordIfNoDecsionResult = provideOneRecordIfNoDecsionResult;
+	}
+
+	public boolean isCacheResults() {
+		return cacheResults;
+	}
+
+	public void setCacheResults(boolean cacheResults) {
+		this.cacheResults = cacheResults;
 	}
 
 

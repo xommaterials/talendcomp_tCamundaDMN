@@ -44,6 +44,7 @@
    String filePath = ElementParameterParser.getValue(node, "__FILE_PATH__");
    String decisionKey = ElementParameterParser.getValue(node, "__DECISION_KEY__");
    boolean oneRecordIfNoResult = "true".equals(ElementParameterParser.getValue(node, "__PROVIDE_EMPTY_OUTPUT_IF_DECISION_HAS_NO_RESULT__"));
+   boolean cacheResults = "true".equals(ElementParameterParser.getValue(node, "__CACHE_RESULTS__"));
 	@SuppressWarnings("unchecked")
 	List<Map<String, String>> configList = (List<Map<String,String>>) ElementParameterParser.getObjectValue(node, "__COLUMN_CONFIG__");
 %>
@@ -76,4 +77,5 @@
 		globalMap.put("<%=cid%>_ERROR_MESSAGE", message);
 		throw e;
 	}
+	<%=cid%>.setCacheResults(<%=cacheResults%>);
 	<%=cid%>.setProvideOneRecordIfNoDecsionResult(<%=oneRecordIfNoResult%>);
