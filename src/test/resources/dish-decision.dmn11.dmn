@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
   <decision id="decision" name="Dish">
     <decisionTable id="decisionTable">
       <input id="input1" label="Season" camunda:inputVariable="xyz">
@@ -13,6 +13,7 @@
         </inputExpression>
       </input>
       <output id="output1" label="Dish" name="desiredDish" typeRef="string" />
+      <output id="OutputClause_1ud8dog" label="AbsGuestCount" name="AbsGuestCount" typeRef="string" />
       <rule id="row-950612891-1">
         <inputEntry id="UnaryTests_0c1o054">
           <text>"Fall"</text>
@@ -22,6 +23,9 @@
         </inputEntry>
         <outputEntry id="LiteralExpression_065u3ym">
           <text>"Spareribs"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1tv3quv">
+          <text>guestCount + 2</text>
         </outputEntry>
       </rule>
       <rule id="row-950612891-2">
@@ -34,6 +38,9 @@
         <outputEntry id="LiteralExpression_198frve">
           <text>"Roastbeef"</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_195b2ey">
+          <text>guestCount + 2</text>
+        </outputEntry>
       </rule>
       <rule id="row-950612891-3">
         <inputEntry id="UnaryTests_1vn9t5c">
@@ -44,6 +51,9 @@
         </inputEntry>
         <outputEntry id="LiteralExpression_1bewepn">
           <text>"Dry Aged Gourmet Steak"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1uc010x">
+          <text>guestCount + 2</text>
         </outputEntry>
       </rule>
       <rule id="row-950612891-4">
@@ -57,6 +67,9 @@
         <outputEntry id="LiteralExpression_1lahvj7">
           <text>"Steak"</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_0eb7n5h">
+          <text>guestCount + 2</text>
+        </outputEntry>
       </rule>
       <rule id="row-950612891-5">
         <description>Less effort</description>
@@ -68,6 +81,9 @@
         </inputEntry>
         <outputEntry id="LiteralExpression_0jpd7hr">
           <text>"Stew"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0rhyjcn">
+          <text>guestCount + 2</text>
         </outputEntry>
       </rule>
       <rule id="row-950612891-6">
@@ -81,7 +97,17 @@
         <outputEntry id="LiteralExpression_08d4mb6">
           <text>"Light Salad and a nice Steak"</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_1ib1g7a">
+          <text>guestCount + 2</text>
+        </outputEntry>
       </rule>
     </decisionTable>
   </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0w1eebx">
+      <dmndi:DMNShape id="DMNShape_1wq0fkf" dmnElementRef="decision">
+        <dc:Bounds height="80" width="180" x="150" y="150" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
 </definitions>

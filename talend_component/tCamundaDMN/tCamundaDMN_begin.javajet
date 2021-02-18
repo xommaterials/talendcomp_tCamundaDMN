@@ -61,12 +61,11 @@
 		IMetadataColumn mc = listColumns.get(i);
 		Map<String, String> config = configList.get(i);
 		String name = mc.getLabel();
-		boolean useAsInput = "true".equals(config.get("USE_AS_INPUT"));
 		boolean useAsOutput = "true".equals(config.get("USE_AS_OUTPUT"));
-		if (useAsInput) { %>
-	<%=cid%>.addExpectedInputVariable("<%=name%>");
-<%    } else if (useAsOutput) { %>
+		if (useAsOutput) { %>
 	<%=cid%>.addExpectedOutputVariable("<%=name%>");
+<%		} else { %>
+	<%=cid%>.addAvailableInputVariable("<%=name%>");
 <%		} %>
 <%	} %>
 	try {

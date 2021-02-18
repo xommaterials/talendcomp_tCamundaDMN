@@ -15,8 +15,8 @@ public class TestDmnRunner {
 		// this runs within the BEGIN part
 		DmnRunner runner = new DmnRunner();
 		runner.loadDmnFromResource("decision", "/dish-decision.dmn11.dmn");
-		runner.addExpectedInputVariable("season");
-		runner.addExpectedInputVariable("guestCount");
+		runner.addAvailableInputVariable("season");
+		runner.addAvailableInputVariable("guestCount");
 		runner.validateInputVariables();
 		runner.addExpectedOutputVariable("desiredDish");
 		runner.validateOutputVariables();
@@ -41,10 +41,10 @@ public class TestDmnRunner {
 		// this runs within the BEGIN part
 		DmnRunner runner = new DmnRunner();
 		runner.loadDmnFromResource("surcharge", "/collect_sum_example.dmn");
-		runner.addExpectedInputVariable("product");
-		runner.addExpectedInputVariable("type");
-		runner.addExpectedInputVariable("grade");
-		runner.addExpectedInputVariable("width");
+		runner.addAvailableInputVariable("product");
+		runner.addAvailableInputVariable("type");
+		runner.addAvailableInputVariable("grade");
+		runner.addAvailableInputVariable("width");
 		runner.validateInputVariables();
 		runner.addExpectedOutputVariable("surcharge");
 		runner.validateOutputVariables();
@@ -79,10 +79,10 @@ public class TestDmnRunner {
 		// this runs within the BEGIN part
 		DmnRunner runner = new DmnRunner();
 		runner.loadDmnFromResource("surcharge", "/collect_sum_example.dmn");
-		runner.addExpectedInputVariable("product");
-		runner.addExpectedInputVariable("type");
-		runner.addExpectedInputVariable("grade");
-		runner.addExpectedInputVariable("width");
+		runner.addAvailableInputVariable("product");
+		runner.addAvailableInputVariable("type");
+		runner.addAvailableInputVariable("grade");
+		runner.addAvailableInputVariable("width");
 		runner.validateInputVariables();
 		runner.addExpectedOutputVariable("surcharge");
 		runner.validateOutputVariables();

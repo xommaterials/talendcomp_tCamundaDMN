@@ -54,9 +54,8 @@
 		IMetadataColumn mc = listColumns.get(i);
 		Map<String, String> config = configList.get(i);
 		String name = mc.getLabel();
-		boolean useAsInput = "true".equals(config.get("USE_AS_INPUT"));
 		boolean useAsOutput = "true".equals(config.get("USE_AS_OUTPUT"));
-		if (useAsInput && inconn != null) { %>
+		if (inconn != null && useAsOutput == false) { %>
 	<%=cid%>.addInputValue("<%=name%>", <%=inconn.getName()%>.<%=name%>);
 <%		}
 		if (inconn != null && outconn != null) {

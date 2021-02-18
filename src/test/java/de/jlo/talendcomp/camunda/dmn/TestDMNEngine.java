@@ -42,7 +42,7 @@ public class TestDMNEngine {
 			DmnDecisionTableResult result = dmnEngine.evaluateDecisionTable(decision, variables);
 
 			// print result
-			String desiredDish = result.getSingleResult().getSingleEntry();
+			String desiredDish = (String) result.getFirstResult().get("Dish");
 			System.out.println("Dish Decision:\n\tI would recommend to serve: " + desiredDish);
 
 		} finally {

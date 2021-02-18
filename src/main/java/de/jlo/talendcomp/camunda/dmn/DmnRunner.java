@@ -230,7 +230,7 @@ public class DmnRunner {
 	 * add a Talend schema input variable for the validation for later validation
 	 * @param schemaOutputColumn
 	 */
-	public void addExpectedInputVariable(String schemaInputColumn) {
+	public void addAvailableInputVariable(String schemaInputColumn) {
 		if (isEmpty(schemaInputColumn)) {
 			throw new IllegalArgumentException("schemaInputColumn cannot be null or empty");
 		}
