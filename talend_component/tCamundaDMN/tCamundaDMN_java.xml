@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <COMPONENT> 
-  <HEADER AUTHOR="Jan Lolling" COMPATIBILITY="ALL" PLATEFORM="ALL" RELEASE_DATE="20210218" SERIAL="" STARTABLE="false" STATUS="PROD" VERSION="1.2" SCHEMA_AUTO_PROPAGATE="false" DATA_AUTO_PROPAGATE="false" HAS_CONDITIONAL_OUTPUTS="true" IS_MULTIPLYING_OUTPUTS="true"> 
+  <HEADER AUTHOR="Jan Lolling" COMPATIBILITY="ALL" PLATEFORM="ALL" RELEASE_DATE="20210311" SERIAL="" STARTABLE="false" STATUS="PROD" VERSION="1.3" SCHEMA_AUTO_PROPAGATE="false" DATA_AUTO_PROPAGATE="false" HAS_CONDITIONAL_OUTPUTS="true" IS_MULTIPLYING_OUTPUTS="true"> 
     <SIGNATURE/> 
   </HEADER>  
   <FAMILIES> 
@@ -50,13 +50,13 @@
     </PARAMETER> 
   </PARAMETERS>  
   <ADVANCED_PARAMETERS> 
-    <PARAMETER NAME="RELEASE_LABEL_20210218" FIELD="LABEL" COLOR="0;0;0" NUM_ROW="900">
-      <DEFAULT>Release: 1.2 build at: 20210218</DEFAULT>
+    <PARAMETER NAME="RELEASE_LABEL_20210311" FIELD="LABEL" COLOR="0;0;0" NUM_ROW="900">
+      <DEFAULT>Release: 1.3 build at: 20210311</DEFAULT>
     </PARAMETER>
   </ADVANCED_PARAMETERS>  
   <CODEGENERATION> 
     <IMPORTS> 
-      <IMPORT NAME="jlo-talendcomp-camunda-dmn" MODULE="jlo-talendcomp-camunda-dmn-1.2.jar" MVN="mvn:org.talend.libraries/jlo-talendcomp-camunda-dmn-1.2/6.0.0-SNAPSHOT" REQUIRED="true"/>
+      <IMPORT NAME="jlo-talendcomp-camunda-dmn" MODULE="jlo-talendcomp-camunda-dmn-1.3.jar" MVN="mvn:org.talend.libraries/jlo-talendcomp-camunda-dmn-1.3/6.0.0-SNAPSHOT" REQUIRED="true"/>
       <IMPORT NAME="camunda-engine-dmn" MODULE="camunda-engine-dmn-7.14.0.jar" MVN="mvn:org.talend.libraries/camunda-engine-dmn-7.14.0/6.0.0-SNAPSHOT" REQUIRED="true"/>
       <IMPORT NAME="camunda-commons-utils" MODULE="camunda-commons-utils-1.9.0.jar" MVN="mvn:org.talend.libraries/camunda-commons-utils-1.9.0/6.0.0-SNAPSHOT" REQUIRED="true"/>
       <IMPORT NAME="camunda-commons-logging" MODULE="camunda-commons-logging-1.9.0.jar" MVN="mvn:org.talend.libraries/camunda-commons-logging-1.9.0/6.0.0-SNAPSHOT" REQUIRED="true"/>

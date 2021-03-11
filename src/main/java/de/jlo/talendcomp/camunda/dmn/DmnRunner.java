@@ -176,6 +176,7 @@ public class DmnRunner {
 		resultset = null;
 		currentResultIndex = 0;
 		provideOneRecordIfNoDecsionResultDelivered = false;
+		oneResult = null;
 	}
 
 	/**

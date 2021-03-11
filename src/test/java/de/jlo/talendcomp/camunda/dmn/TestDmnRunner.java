@@ -1,6 +1,7 @@
 package de.jlo.talendcomp.camunda.dmn;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.Date;
 
@@ -72,13 +73,14 @@ public class TestDmnRunner {
 
 	@Test
 	public void testNoRecords() throws Exception {
-		String product = "Product0";
+		String product = "Product1";
 		String type = "1";
 		String grade = "4307";
 		int width = 0;
 		// this runs within the BEGIN part
 		DmnRunner runner = new DmnRunner();
 		runner.loadDmnFromResource("surcharge", "/collect_sum_example.dmn");
+		runner.setProvideOneRecordIfNoDecsionResult(true);
 		runner.addAvailableInputVariable("product");
 		runner.addAvailableInputVariable("type");
 		runner.addAvailableInputVariable("grade");
@@ -93,13 +95,31 @@ public class TestDmnRunner {
 		runner.addInputValue("grade", grade);
 		runner.addInputValue("width", width);
 		runner.evaluate();
-		runner.setProvideOneRecordIfNoDecsionResult(true);
-		System.out.println(runner.countResultRows());
+		System.out.println("Count tests: " + runner.countResultRows());
 		int count = 0;
 		while (runner.next()) {
 			count++;
 			Integer surcharge = (Integer) runner.getOutputValue("surcharge", true);
 			System.out.println(surcharge);
+		}
+		assertEquals(1, count);
+		System.out.println("##### add new row which should not return something");
+		product = "Product0";
+		type = "1";
+		grade = "4307";
+		width = 0;
+		runner.clearVariables();
+		runner.addInputValue("product", product);
+		runner.addInputValue("type", type);
+		runner.addInputValue("grade", grade);
+		runner.addInputValue("width", width);
+		runner.evaluate();
+		System.out.println("Count tests: " + runner.countResultRows());
+		count = 0;
+		while (runner.next()) {
+			count++;
+			Integer surcharge = (Integer) runner.getOutputValue("surcharge", true);
+			assertNull("Got value where no value should be returned", surcharge);
 		}
 		assertEquals(1, count);
 	}
