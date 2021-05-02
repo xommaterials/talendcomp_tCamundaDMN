@@ -271,7 +271,7 @@ public class DmnRunner {
 					if (sb.length() > 0) {
 						sb.append("\n");
 					}
-					sb.append("Talend outgoing schema column: " + name + " has no output variable within the decsion");
+					sb.append("Talend outgoing schema column: " + name + " has no output variable within the decision: " + decision.getKey());
 				}
 			}
 			if (sb.length() > 0) {

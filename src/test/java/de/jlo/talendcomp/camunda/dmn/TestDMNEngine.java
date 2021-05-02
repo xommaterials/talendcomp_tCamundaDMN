@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,11 @@ import org.camunda.bpm.dmn.engine.impl.DmnDecisionTableOutputImpl;
 import org.camunda.bpm.dmn.engine.spi.DmnEngineMetricCollector;
 import org.camunda.bpm.engine.variable.VariableMap;
 import org.camunda.bpm.engine.variable.Variables;
+import org.camunda.bpm.model.dmn.Dmn;
+import org.camunda.bpm.model.dmn.DmnModelInstance;
+import org.camunda.bpm.model.dmn.instance.Definitions;
+import org.camunda.bpm.model.dmn.instance.DrgElement;
+import org.camunda.bpm.model.xml.impl.util.IoUtil;
 import org.junit.Test;
 
 public class TestDMNEngine {
@@ -222,6 +228,55 @@ public class TestDMNEngine {
 			System.out.println("executed elements=" + collector.getExecutedDecisionElements());
 			System.out.println("executed instances=" + collector.getExecutedDecisionInstances());
 			assertEquals(1, result.size());
+		} finally {
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				// ignore
+			}
+		}
+	}
+	
+	@Test
+	public void testDRG2() throws Exception {
+		String season = "Winter";
+		int guestCount = 3;
+		boolean guestsWithChildren = false;
+
+		VariableMap variables = Variables
+								.putValue("season", season)
+								.putValue("guestCount", guestCount)
+								.putValue("guestsWithChildren", guestsWithChildren);
+
+		DmnEngine dmnEngine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration().buildEngine();
+		DmnEngineMetricCollector collector = dmnEngine.getConfiguration().getEngineMetricCollector();
+
+		InputStream inputStream = TestDMNEngine.class.getResourceAsStream("/drg_dishes.dmn");
+
+		try {
+			List<DmnDecision> listdecision = dmnEngine.parseDecisions(inputStream);
+			for (DmnDecision decision : listdecision) {
+				
+				if (decision.getKey().equals("beverages")) {
+					System.out.println("drg-key=" + decision.getKey());
+					
+					// evaluate decision
+					DmnDecisionResult result = dmnEngine.evaluateDecision(decision, variables);
+
+					for (DmnDecisionResultEntries oneResult : result) {
+						System.out.println("----------------------");
+						for (Map.Entry<String, Object> oneValue : oneResult.entrySet()) {
+							String var = oneValue.getKey();
+							Object value = oneValue.getValue();
+							System.out.println(var + "=" + value);
+						}
+					}
+					System.out.println("==========================");
+					System.out.println("executed elements=" + collector.getExecutedDecisionElements());
+					System.out.println("executed instances=" + collector.getExecutedDecisionInstances());
+					assertEquals(1, result.size());
+				}
+			}
 		} finally {
 			try {
 				inputStream.close();

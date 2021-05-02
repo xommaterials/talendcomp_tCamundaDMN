@@ -69,7 +69,7 @@
 <%		} %>
 <%	} %>
 	try {
-		<%=cid%>.validateInputVariables();
+		// commented out because it fails in case of multiple decisions in one DRG <%=cid%>.validateInputVariables();
 		<%=cid%>.validateOutputVariables();
 	} catch (Exception e) {
 		String message = e.getMessage();
