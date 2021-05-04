@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_01sw8o4" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.7.0">
+  <decision id="surcharges" name="surcharges">
+    <decisionTable id="DecisionTable_1bzun33" hitPolicy="COLLECT" aggregation="SUM">
+      <input id="Input_1" label="Material" camunda:inputVariable="material">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_045geuv" label="Finish" camunda:inputVariable="finish">
+        <inputExpression id="LiteralExpression_0wceytg" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1v3ldwm" label="Foiling" camunda:inputVariable="foiling">
+        <inputExpression id="LiteralExpression_1ufir1e" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_19vkgkh" label="Width" camunda:inputVariable="width">
+        <inputExpression id="LiteralExpression_0mmr8mv" typeRef="integer">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0jmp5kv" label="Length" camunda:inputVariable="length">
+        <inputExpression id="LiteralExpression_0uogtie" typeRef="integer">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Surcharge" name="surcharge" typeRef="integer" />
+      <rule id="DecisionRule_0r5w7qm">
+        <inputEntry id="UnaryTests_1t6uclw">
+          <text>"Stahl"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f36sqo">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18m5oe5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bv7uv4">
+          <text>&lt;2000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_150magl">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05ckjlv">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_08oarqo">
+        <inputEntry id="UnaryTests_1ysmtdv">
+          <text>"Stahl"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0c17ufb">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fio9zg">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rglheu">
+          <text>&gt;=2000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xymwdu">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14acizz">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1p15s0n">
+        <inputEntry id="UnaryTests_0axstac">
+          <text>"Stahl"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v5quw3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cfba20">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0n39d5w">
+          <text>&gt;=2000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xt4q6r">
+          <text>&gt;5000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0bfqy3p">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0k10l5x">
+        <inputEntry id="UnaryTests_0mo0teb">
+          <text>"Aluminium"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ed94tl">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fu3hye">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11z67o0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1x53du1">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mmazwt">
+          <text>-10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00b2eqd">
+        <inputEntry id="UnaryTests_1fsf8f1">
+          <text>"Kupfer","Messing"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1i0xqon">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ag5wwa">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v10kcv">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0m0wrj0">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0sc09j6">
+          <text>35</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1arjc3c">
+        <inputEntry id="UnaryTests_1dpk4v0">
+          <text>"Gold"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10mfxwh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0sj66fx">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1a0hxm9">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_084z7d3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xe7emw">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_17g9nba">
+        <inputEntry id="UnaryTests_07ociqg">
+          <text>"Plaste"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1c89txb">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1in6dny">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_153nl7l">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_171frxo">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ff5rhl">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ki1m7m">
+        <inputEntry id="UnaryTests_14n2pjb">
+          <text>not("Plaste")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ed4etv">
+          <text>"gebürstet"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0i338jq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0l19d26">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0eg6lm1">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1gwnswy">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_027dsl6">
+        <inputEntry id="UnaryTests_0uwqai1">
+          <text>not("Plaste")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1o2kosz">
+          <text>"poliert"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cdk65n">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1s6nwte">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06c5ssi">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15eumxr">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1b5p6z5">
+        <inputEntry id="UnaryTests_1xmxosm">
+          <text>not("Plaste")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cbtdd5">
+          <text>"lackiert"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y9rxw1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1nx7doj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lnhvua">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02aylyb">
+          <text>50</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1emrqsd">
+        <inputEntry id="UnaryTests_1p4uvyo">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ox02uu">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0idmaq1">
+          <text>"Papierlage"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kepfne">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pjrlev">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04u7m17">
+          <text>30</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1nicljb">
+        <inputEntry id="UnaryTests_0094r4h">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16xvq5i">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rwlj4n">
+          <text>"Kunststofffolie"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1022w2y">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cq4oue">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0t808sv">
+          <text>40</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_053g5ym">
+        <description>Toll</description>
+        <inputEntry id="UnaryTests_1bkepqf">
+          <text>"Stahl","Kupfer","Plaste"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ans3al">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_139clmh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1d1346t">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ffvz25">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0e9xkyg">
+          <text>6</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="surcharges">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
